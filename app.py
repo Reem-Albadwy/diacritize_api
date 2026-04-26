@@ -5,14 +5,16 @@ import os
 
 app = FastAPI()
 
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-
 class RequestBody(BaseModel):
     text: str
 
 
 @app.post("/diacritize")
 def diacritize(req: RequestBody):
+
+    client = genai.Client(
+        api_key=os.getenv("GEMINI_API_KEY")
+    )
 
     prompt = f"""
 أضف التشكيل الكامل للنص العربي التالي مع مراعاة المعنى:
